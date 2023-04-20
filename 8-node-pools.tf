@@ -11,10 +11,10 @@ resource "google_container_node_pool" "general" {
     auto_repair  = true
     auto_upgrade = true
   }
-
+  #"e2-standard-4"
   node_config {
     preemptible  = false
-    machine_type = "e2-standard-4"
+    machine_type = var.machine_type
 
     labels = {
       role = "general"
@@ -29,10 +29,9 @@ resource "google_container_node_pool" "general" {
 }
 
 resource "google_container_node_pool" "spot" {
+
   name    = "spot"
   cluster = google_container_cluster.primary.id
-
-
 
   management {
     auto_repair  = true
@@ -45,7 +44,8 @@ resource "google_container_node_pool" "spot" {
   }
 
   node_config {
-    preemptible = true
+    preemptible  = true
+    machine_type = var.machine_type
 
     labels = {
       team = "me-team"

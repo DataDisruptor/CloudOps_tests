@@ -3,15 +3,9 @@ resource "google_container_cluster" "primary" {
   location                 = var.location
   remove_default_node_pool = true
   initial_node_count       = 1
-  network                  = google_compute_network.main_vpc.self_link
-  subnetwork               = google_compute_subnetwork.private_net.self_link
+  network                  = google_compute_network.main_vpc.name
+  subnetwork               = google_compute_subnetwork.private_net.name
   networking_mode          = "VPC_NATIVE"
-  #   logging_service          = "logging.googleapis.com/kubernetes"
-  #   monitoring_service       = "monitoring.googleapis.com/kubernetes"
-
-  node_locations = [
-    "${var.location}-b"
-  ]
 
   addons_config {
     http_load_balancing {
@@ -40,4 +34,15 @@ resource "google_container_cluster" "primary" {
     enable_private_endpoint = false
     master_ipv4_cidr_block  = "172.16.0.0/28"
   }
+
+  depends_on = [
+    google_compute_network.main_vpc,
+    google_compute_subnetwork.private_net
+  ]
+  #   logging_service          = "logging.googleapis.com/kubernetes"
+  #   monitoring_service       = "monitoring.googleapis.com/kubernetes"
+
+  # node_locations = [
+  #   "${var.location}-b"
+  # ]
 }

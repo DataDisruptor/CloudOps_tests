@@ -23,7 +23,7 @@ variable "image_tag" {
 
 # Define the GCP project ID and zone
 variable "project_id" {
-  default = "superb-system-382911"
+  default = "system-ops-v2"
 }
 
 variable "project_number" {
@@ -36,6 +36,10 @@ variable "location" {
 
 variable "zone" {
   default = "me-west1-a"
+}
+
+variable "machine_type" {
+  default = "e2-medium"
 }
 
 variable "gke_num_nodes" {
