@@ -1,6 +1,10 @@
 
 variable "bucket_name" {
-  default = "my-staging-env"
+  default = "staging-env-545"
+}
+
+variable "main_cluster_name" {
+  default = "core-app-cluster"
 }
 
 # Define the Git repository URL
@@ -23,11 +27,11 @@ variable "image_tag" {
 
 # Define the GCP project ID and zone
 variable "project_id" {
-  default = "system-ops-v2"
+  default = "system-ops-v3"
 }
 
 variable "project_number" {
-  default = "447996874254"
+  default = ""
 }
 
 variable "location" {
@@ -57,3 +61,5 @@ variable "secondary_service_range" {
 variable "kube_service_name" {
   default = "kube-service-deployed-00"
 }
+
+

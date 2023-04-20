@@ -1,3 +1,9 @@
+# 1) Create GoogleCloud Project
+# 2) Enable Compute Engine API
+# 3) Enable Kubernetes Engine
+# 4) Create a new Storage Bucket
+# 5) Authorize your working terminal - `$ gcloud config set project $PROJECT_ID`
+
 provider "google" {
   project = var.project_id
   region  = var.location
@@ -5,8 +11,8 @@ provider "google" {
 
 terraform {
   backend "gcs" {
-    bucket = "my-staging-env"
-    prefix = "dir/to/"
+    bucket = "staging-env-5005"
+    prefix = "state/snapshot/"
   }
   required_providers {
     google = {

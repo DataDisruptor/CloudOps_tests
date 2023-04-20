@@ -6,27 +6,27 @@
 #   auto_create_network = false
 # }
 
-resource "google_project_service" "oslogin" {
-  service                    = "oslogin.googleapis.com"
-  disable_dependent_services = false
-}
+# resource "google_project_service" "oslogin" {
+#   service                    = "oslogin.googleapis.com"
+#   disable_dependent_services = false
+# }
 
-resource "google_project_service" "compute" {
-  service                    = "compute.googleapis.com"
-  disable_dependent_services = false
-  depends_on = [
-    google_project_service.oslogin
-  ]
-}
+# resource "google_project_service" "compute" {
+#   service                    = "compute.googleapis.com"
+#   disable_dependent_services = false
+#   depends_on = [
+#     google_project_service.oslogin
+#   ]
+# }
 
-resource "google_project_service" "container" {
-  service                    = "container.googleapis.com"
-  disable_dependent_services = false
+# resource "google_project_service" "container" {
+#   service                    = "container.googleapis.com"
+#   disable_dependent_services = false
 
-  depends_on = [
-    google_project_service.compute
-  ]
-}
+#   depends_on = [
+#     google_project_service.compute
+#   ]
+# }
 
 
 
@@ -38,9 +38,9 @@ resource "google_compute_network" "main_vpc" {
   delete_default_routes_on_create = false
   mtu                             = 1460
 
-  depends_on = [
-    google_project_service.compute,
-    google_project_service.container,
-    google_project_service.oslogin
-  ]
+  # depends_on = [
+  #   google_project_service.compute,
+  #   google_project_service.container,
+  #   google_project_service.oslogin
+  # ]
 }

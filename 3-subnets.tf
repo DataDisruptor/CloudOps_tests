@@ -14,4 +14,7 @@ resource "google_compute_subnetwork" "private_net" {
     range_name    = var.secondary_service_range
     ip_cidr_range = "10.52.0.0/20"
   }
+  depends_on = [
+    google_compute_network.main_vpc
+  ]
 }

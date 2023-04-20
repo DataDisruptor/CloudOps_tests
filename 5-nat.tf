@@ -21,7 +21,10 @@ resource "google_compute_address" "nat" {
   network_tier = "PREMIUM"
 
   # Since we created a vpc from scratch, we need to make sure the Compute API is enabled before actually allocating the IP
+  # depends_on = [
+  #   google_project_service.compute
+  # ]
   depends_on = [
-    google_project_service.compute
+    google_compute_network.main_vpc
   ]
 }
