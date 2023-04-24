@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: ao-art-container
-          image: docker.io/ao5000cookiesh/ao-art:v1 #me-west1-docker.pkg.dev/superb-system-382911/my-repo/ao-art:v1
+          image: me-west1-docker.pkg.dev/system-ops-v3/my-repo/ao-art:v1 #docker.io/ao5000cookiesh/ao-art:v1 #me-west1-docker.pkg.dev/superb-system-382911/my-repo/ao-art:v1
           ports:
             - containerPort: 3000
       tolerations:

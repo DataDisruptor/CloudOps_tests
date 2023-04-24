@@ -9,21 +9,25 @@
 #   Get nginx repo:         `$ helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx`
 #   Update Helm repo:       `$ helm repo update`
 #   Get repo version num:   `$ helm search repo nginx`
-#   -----------in this stage - override default nginx ingress controller in a yaml file---------------
+#
+#   -----------in this stage - override default nginx ingress controller in a yaml file( see "4-nginx-ingress-controller.yaml" )---------------
+#
 #   Deploy to K8S w/ Helm:  `$ helm install $INGRESS_CTRL_NAME ingress-nginx/ingress-nginx --namespace $NS_NAME --version $REPO_V_NUM --values $PATH_TO_YML_FILE --create-namespace
 #   Delete Helm release:    `$ helm delete $RELEASE_NAME --namespace $RELEASE_NAMESPACE_NAME`
 #   Purge Helm resources:   `$ helm delete $RELEASE_NAME --purge`
 
 # Kubectl:
 #   See ingress classes:    `$ kubectl get ingressclass`
-#   Describe statuses:      `$ kubectl describe {service/pod/node} ${service/pod/node}_NAME`
+#   Describe status:      `$ kubectl describe {service/pod/node} ${service/pod/node}_NAME`
 
 resource "null_resource" "cluster_credentials" {
   provisioner "local-exec" {
     command = "gcloud container clusters get-credentials ${var.main_cluster_name}"
   }
   depends_on = [
-    google_container_cluster.primary
+    google_container_cluster.primary,
+    google_container_node_pool.general,
+    google_container_node_pool.spot
   ]
 }
 
@@ -33,7 +37,8 @@ resource "null_resource" "kube_deploy" {
   }
 
   depends_on = [
-    null_resource.cluster_credentials
+    null_resource.cluster_credentials,
+    null_resource.docker_push
   ]
 }
 
@@ -43,7 +48,9 @@ resource "null_resource" "kube_ingress" {
   }
 
   depends_on = [
-    null_resource.cluster_credentials
+    null_resource.cluster_credentials,
+    null_resource.docker_push,
+    null_resource.kube_deploy
   ]
 }
 
